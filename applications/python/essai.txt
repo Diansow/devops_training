@@ -1,0 +1,30 @@
+
+Voici un exemple simple de Dockerfile pour créer une image Docker avec Nginx :
+
+Dockerfile
+Copy code
+# Utilisation d'une image de base avec Nginx préinstallé
+FROM nginx
+
+# Suppression du fichier de configuration par défaut de Nginx
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copie du fichier de configuration personnalisé dans le conteneur
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf
+
+# Copie des fichiers statiques de l'application dans le répertoire de contenu de Nginx
+COPY static/ /usr/share/nginx/html
+
+# Exposition du port sur lequel Nginx écoute
+EXPOSE 80
+
+# Commande par défaut pour démarrer Nginx
+CMD ["nginx", "-g", "daemon off;"]
+Explications :
+
+La première ligne spécifie l'image de base à utili
+Ensuite, nous copions le fichier de configuration nginx.conf (que vous devrez fournir) dans le répertoire /etc/nginx/conf.d/ du conteneur. Assurez-vous de fournir un fichier de configuration adapté à vos besoins.
+Nous copions également les fichiers statiques de l'application dans le répertoire /usr/share/nginx/html du conteneur. Ces fichiers peuvent contenir les fichiers HTML, CSS, JavaScript, etc. de votre application web.
+La commande EXPOSE indique le port sur lequel Nginx écoute, dans cet exemple, le port 80.
+Enfin, la commande CMD spécifie la commande par défaut qui sera exécutée lorsque le conteneur sera démarré. Dans ce cas, nous utilisons nginx -g "daemon off;" pour démarrer Nginx en mode démon.
+Assurez-vous de fournir votre propre fichier de configuration Nginx (nginx.conf) adapté à votre application ou à vos besoins spécifiques. Vous pouvez également ajouter d'autres fichiers ou répertoires dans l'image en utilisant la commande COPY pour les inclure dans le conteneur.

@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - my-network
+
+  web:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: false

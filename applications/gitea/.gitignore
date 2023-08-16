@@ -1,0 +1,11 @@
+./gitea/
+gitea/git/
+gitea/gitea/gitea.db
+gitea/gitea/home/
+gitea/gitea/indexers/
+gitea/gitea/jwt/
+gitea/gitea/queues/
+gitea/gitea/sessions/
+gitea/gitea/conf/app.ini
+gitea/git/.ssh/environment
+gitea/gitea/conf/app.ini

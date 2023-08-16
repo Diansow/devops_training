@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    image: flask:0.0.2
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST} 
+      VIRTUAL_PORT: ${VIRTUAL_PORT}
+    networks:
+      - my_flask_network
+      - default
+      - nginx_my-network
+
+networks:
+  nginx_my-network:
+    external: true
+  my_flask_network:
+    external: true
