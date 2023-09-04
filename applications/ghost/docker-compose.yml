@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.7"
 
 services:
   ghost:
@@ -6,8 +6,8 @@ services:
     restart: always
     depends_on:
       - mysql-service
-    #ports:
-    #- 8080:2368
+    ports:
+      - 8082:2368
     environment:
       # see https://ghost.org/docs/config/#configuration-options
       database__client: mysql
@@ -26,6 +26,7 @@ services:
       - nginx_my-network
     volumes:
       - ghost-data:/var/lib/ghost/content 
+    
 
   mysql-service:
     image: mysql:8.0.34

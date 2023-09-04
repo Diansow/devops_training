@@ -5,6 +5,8 @@ services:
     environment:
       - VIRTUAL_PORT=${VIRTUAL_PORT_PORTAINER}
       - VIRTUAL_HOST=${VIRTUAL_HOST_PORTAINER}
+    ports:
+      - 9000:9000
     volumes:
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock

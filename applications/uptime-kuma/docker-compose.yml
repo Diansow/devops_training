@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.0-alpine
+    container_name: uptime-kuma
+    volumes:
+      - uptime-kuma-data:/app/data
+    ports:
+      - 3001:3001  # <Host Port>:<Container Port>
+    restart: always
+    networks:
+      - default
+      - nginx_my-network
+
+volumes:
+  uptime-kuma-data:
+
+networks:
+  nginx_my-network:
+    external: true
