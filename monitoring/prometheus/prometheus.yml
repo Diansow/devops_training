@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+rule_files:
+  - alert.yml
+
+scrape_configs:
+  - job_name: 'prometheus_job'
+    static_configs:
+      - targets: ['prometheus-svc:9090']
+
+  - job_name: 'node-exporter-job'
+    static_configs:
+      - targets: ['node-exporter-svc:9100']
+
+  - job_name: 'cadvisor_job'
+    static_configs:
+      - targets: ['cadvisor-svc:8080']
+
+  - job_name: "gitea_job"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["gitea-svc:3000"]
+  
+  - job_name: "flask_job"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["app-svc:5000"]
