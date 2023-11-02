@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  traefik:
+  traefik-svc:
     image: "traefik:v2.6"
     container_name: "traefik"
     command:
@@ -12,8 +12,8 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--providers.docker.network=dian_network"
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "82:80"
+      - "8081:8080"
       - "443:443"
     networks:
       - default

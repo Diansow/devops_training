@@ -1,18 +1,26 @@
 version: '3.7'
 services:
-  app:
+  app-svc:
     build: .
-    image: flask:0.0.2
+    image: flask:0.0.23
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST} 
       VIRTUAL_PORT: ${VIRTUAL_PORT}
+    ports:
+      - 5050:5000
+    volumes:
+      - ./:/app
+    command: ["flask", "run"]
     networks:
       - my_flask_network
       - default
       - nginx_my-network
+      - monitoring-network
 
 networks:
   nginx_my-network:
     external: true
   my_flask_network:
+    external: true
+  monitoring-network:
     external: true

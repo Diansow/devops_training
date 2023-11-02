@@ -1,9 +1,9 @@
 version: "3.7"
 services:
-  portainer:
+  portainer-svc:
     image: portainer/portainer-ce:2.18.4
     ports:
-      - 9000:9000
+      - 9009:9000
     volumes:
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -12,6 +12,8 @@ services:
       - "traefik.http.routers.portainer_rt.rule=Host(`portainer-saguidorde.com`)"
       - "traefik.http.services.portainer_sv.loadbalancer.server.port=9000"
       - "traefik.http.routers.portainer_rt.entrypoints=websecure"
+      - "traefik.http.routers.portainer_rt.tls.certresolver=lets-encrypt"
+      
     networks:
       - default
       - dian_network

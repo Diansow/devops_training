@@ -1,13 +1,13 @@
 version: "3.7"
 
 services:
-  ghost:
+  ghost-svc:
     image: ghost:5.55.2
     restart: always
     depends_on:
       - mysql-service
     ports:
-      - 8082:2368
+      - 2367:2368
     environment:
       # see https://ghost.org/docs/config/#configuration-options
       database__client: mysql
@@ -19,15 +19,23 @@ services:
       url: http://${VIRTUAL_HOST_NAME}
       # contrary to the default mentioned in the linked documentation, this image defaults to NODE_ENV=production (so development mode needs to be explicitly specified if desired)
       NODE_ENV: production
-      VIRTUAL_HOST: ${VIRTUAL_HOST_NAME}
-      VIRTUAL_PORT: 2368
+      # VIRTUAL_HOST: ${VIRTUAL_HOST_NAME}
+      # VIRTUAL_PORT: 2368
+    labels:
+      # enable traefik
+      - "traefik.enable=true"
+      # Define routers
+      - "traefik.http.routers.${GHOST_ROUTEUR_NAME}.rule=Host(`${GHOST_HOST_NAME}`)"
+      - "traefik.http.routers.${GHOST_ROUTEUR_NAME}.entrypoints=websecure"
+      # service
+      - traefik.http.services.${GHOST_SERVICE_NAME}.loadbalancer.server.port=${GHOST_HOST_PORT}
     networks:
       - default
       - nginx_my-network
+      - traefik_my-network
     volumes:
       - ghost-data:/var/lib/ghost/content 
     
-
   mysql-service:
     image: mysql:8.0.34
     restart: always
@@ -40,6 +48,8 @@ services:
 
 networks:
   nginx_my-network:
+    external: true
+  traefik_my-network:
     external: true
 
 volumes:

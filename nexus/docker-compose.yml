@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  nexus-svc:
+    image: sonatype/nexus3:3.60.0
+    container_name: nexus
+    ports:
+      - "8181:8081"  # Port pour l'interface web de Nexus
+      - "8282:8082"  # Port pour le registre Docker Nexus
+    volumes:
+      - ./nexus-data:/nexus-data # Ne pas oublier de creer le volume nexus-data

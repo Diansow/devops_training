@@ -2,10 +2,12 @@ version: "3"
 
 networks:
   gitea:
-    external: false
+    external: true
+  monitoring-network:
+    external: true
 
 services:
-  server:
+  gitea-svc:
     image: gitea/gitea:1.20.2
     container_name: gitea
     environment:
@@ -14,12 +16,13 @@ services:
     restart: always
     networks:
       - gitea
+      - monitoring-network
     volumes:
       - ./gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "3000:3000"
+      - "3030:3000"
       - "222:22"
       #rajoutre des virtual port et host 
       #rajouter les netwoerks pour communiquer avec nginx

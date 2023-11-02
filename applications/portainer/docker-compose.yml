@@ -1,12 +1,12 @@
 version: "3.7"
 services:
-  portainer:
+  portainer-svc:
     image: portainer/portainer-ce:2.18.4
     environment:
       - VIRTUAL_PORT=${VIRTUAL_PORT_PORTAINER}
       - VIRTUAL_HOST=${VIRTUAL_HOST_PORTAINER}
     ports:
-      - 9000:9000
+      - 9090:9000
     volumes:
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock
