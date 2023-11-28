@@ -15,8 +15,12 @@ scrape_configs:
       - targets: ['node-exporter-svc:9100']
 
   - job_name: 'cadvisor_job'
+    scrape_interval: 10s 
+    metrics_path: '/metrics'
     static_configs:
       - targets: ['cadvisor-svc:8080']
+        labels:
+          group: 'cadvisor'
 
   - job_name: "gitea_job"
     scrape_interval: 5s
@@ -27,3 +31,21 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ["app-svc:5000"]
+
+  - job_name: "blackbox_job"
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # You can adjust this based on your needs.
+    static_configs:
+      - targets:
+         - example.com
+         - example2.com
+         - "app-svc:5000"
+         - "gitea-svc:3000"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-svc:9115

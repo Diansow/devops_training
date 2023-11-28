@@ -5,7 +5,7 @@ services:
     image: grafana/grafana:10.2.0
     container_name: grafana
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=adminpassword
@@ -14,7 +14,7 @@ services:
       - VIRTUAL_PORT=3000
     restart: unless-stopped
     ports:
-      - 3030:3000
+      - 3033:3000
     networks:
       - monitoring-network
       - default
@@ -33,6 +33,16 @@ services:
       - monitoring-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  blackbox-svc:
+    image: prom/blackbox-exporter
+    container_name: blackbox
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./prometheus/config.yml:/etc/blackbox_exporter/config.yml
+    networks:
+      - monitoring-network
 
   node-exporter-svc:
     image: prom/node-exporter:v1.2.2
@@ -55,7 +65,6 @@ services:
 
 volumes:
   prometheus-data:
-  grafana_data:
   
 networks:
   monitoring-network:

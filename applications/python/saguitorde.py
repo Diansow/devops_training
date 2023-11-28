@@ -12,7 +12,7 @@ metrics.info('app_info', 'Application info', version='1.0.3')
 
 @app.route("/")
 def index():
-    return "WELCOME!"
+    return "WELCOME IN My Web Site!"
 
 
 @app.route("/v1/greetings")
