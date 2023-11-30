@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:7.0.3
+    container_name: some-mongo
+    networks:
+      - some-network
+    
+  mongo-express:
+    image: mongo-express:1.0.0-20
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: some-mongo
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+      ME_CONFIG_BASICAUTH_USERNAME: user
+      ME_CONFIG_BASICAUTH_PASSWORD: limboco
+    networks:
+      - some-network
+
+networks: 
+  some-network:
+    external: true
