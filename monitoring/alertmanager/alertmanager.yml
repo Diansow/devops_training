@@ -1,0 +1,18 @@
+# ALERTE MANAGER
+global:
+  resolve_timeout: 1m
+  smtp_from: soowcode@gmail.com #L'adresse e-mail à utiliser comme expéditeur dans les e-mails envoyés.
+  smtp_smarthost: smtp.gmail.com:587 #c'est le serveur SMTP de Gmail sur le port 587.
+  smtp_auth_username: sowdian@gmail.com #Le nom d'utilisateur (adresse e-mail) utilisé pour l'authentification SMTP.
+  smtp_auth_identity: sowdian@gmail.com #L'identité utilisée lors de l'authentification SMTP. Cela pourrait être identique au nom d'utilisateur ou être différent selon le serveur SMTP.
+  smtp_auth_password: bbio aqes hrcr szbp #Le mot de passe associé au nom d'utilisateur pour l'authentification SMTP. 
+
+route:
+  receiver: "default"
+
+receivers:
+  - name: "default"
+    email_configs:
+      - to: "sowdian@gmail.com"
+        headers:
+          subject: "SoowCode for paris"

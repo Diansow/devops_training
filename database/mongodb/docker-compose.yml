@@ -6,7 +6,7 @@ services:
     container_name: some-mongo
     networks:
       - some-network
-    
+   # docker run --name some-mongo --network some-network mongo:7.0.3 
   mongo-express:
     image: mongo-express:1.0.0-20
     ports:

@@ -51,6 +51,18 @@ services:
     networks:
       - monitoring-network
 
+  alertmanager-svc:
+    image: prom/alertmanager:v0.26.0
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    networks:
+      - monitoring-network
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager-slack.yml"
+      - "--storage.path=/alertmanager"
+
   cadvisor-svc:
     image: wavefronthq/cadvisor:latest
     ports:
