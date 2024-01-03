@@ -1,0 +1,65 @@
+# Spécification du déploiement pour Mongo Express
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Nom du déploiement
+  name: mongo-express-deployment
+spec:
+  # Nombre de répliques
+  replicas: 1
+  # Sélecteur pour cibler les pods avec les labels appropriés
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        # Image à utiliser pour le conteneur Mongo Express
+        image: mongo-express:1.0.0-20
+        ports:
+        - containerPort: 8081
+        env:
+          # Variables d'environnement pour la configuration de Mongo Express
+          - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: basic_auth_username
+          - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: basic_auth_password
+          - name: ME_CONFIG_MONGODB_SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-configmap
+                key: databaseurl
+
+---
+# Spécification du Service pour Mongo Express
+apiVersion: v1
+kind: Service
+metadata:
+  # Nom du service
+  name: mongo-express-service
+spec:
+  # Sélecteur pour cibler les pods associés au service
+  selector:
+    app: mongo-express
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      # Port exposé au niveau du nœud
+      nodePort: 30300
+  # Type de service
+  type: LoadBalancer
+
+# Ce fichier YAML définit un déploiement pour Mongo Express 
+# avec des variables d'environnement provenant d'un ConfigMap et d'un Secret. 
+# Le service associé est de type LoadBalancer et expose le port 8081.

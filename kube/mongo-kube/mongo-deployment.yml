@@ -1,0 +1,59 @@
+# Spécification du déploiement pour Mongo
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Nom du déploiement
+  name: mongo-deployment
+spec:
+  # Nombre de répliques (instances) du pod
+  replicas: 1
+  selector:
+    # Sélecteur pour cibler les pods avec les labels appropriés
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        # Image à utiliser pour le conteneur Mongo
+        image: mongo:7.0.3
+        ports:
+        - containerPort: 27017
+        env:
+          # Variables d'environnement pour la configuration de Mongo
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                # Référence au Secret contenant le nom d'utilisateur d'authentification de base
+                name: mongo-secret
+                key: basic_auth_username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                # Référence au Secret contenant le mot de passe d'authentification de base
+                name: mongo-secret
+                key: basic_auth_password
+
+---
+# Spécification du Service pour Mongo
+apiVersion: v1
+kind: Service
+metadata:
+  # Nom du service
+  name: mongo-service
+spec:
+  selector:
+    # Sélecteur pour cibler les pods avec les labels appropriés
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+# Ce fichier YAML définit un déploiement pour MongoDB et un service pour exposer MongoDB 
+# à d'autres composants du cluster Kubernetes. 
+# Le déploiement utilise les informations d'authentification stockées dans le Secret "mongo-secret" 
+# pour configurer l'utilisateur et le mot de passe de la base de données MongoDB.

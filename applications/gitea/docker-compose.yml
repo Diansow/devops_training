@@ -26,4 +26,3 @@ services:
       - "222:22"
       #rajoutre des virtual port et host 
       #rajouter les netwoerks pour communiquer avec nginx
-

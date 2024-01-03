@@ -1,0 +1,13 @@
+# Spécification du ConfigMap pour la configuration de Mongo Express
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # Nom du ConfigMap
+  name: mongo-configmap
+data:
+  # Clé et valeur pour l'URL de la base de données
+  databaseurl: mongo-service
+
+# Ce fichier YAML définit un ConfigMap nommé "mongo-configmap" avec une clé "databaseurl"
+# qui a la valeur "mongo-service". Les ConfigMaps sont utilisés pour stocker des données de configuration
+# sous forme de paires clé-valeur, ici utilisé pour définir l'URL de la base de données utilisée par Mongo Express.
