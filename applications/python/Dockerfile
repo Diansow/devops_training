@@ -16,10 +16,10 @@ COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiez le reste du contenu de votre application dans le conteneur
-#COPY . .
+COPY . .
 
 # Exposez le port 5000 pour permettre l'accès à l'application Flask
 EXPOSE 5000
 
 # Définissez la commande à exécuter lorsque le conteneur démarre
-#CMD ["flask", "run"]
+CMD ["flask", "run"]

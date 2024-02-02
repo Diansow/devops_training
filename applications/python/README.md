@@ -71,7 +71,7 @@ L'application Flask sera accessible à l'adresse `http://localhost:5000` dans vo
 Si vous souhaitez exécuter l'application sans apporter de modifications, vous pouvez utiliser directement l'image Docker pré-construite disponible sur Docker Hub :
 
 ```
-docker run -it --rm -p 5000:5000 diandev/flask_app:0.0.1
+docker run -it --rm -p 5000:5000 diandev/flask-test:v1
 ```
 
 L'application Flask sera accessible à l'adresse `http://localhost:5000` dans votre navigateur.
